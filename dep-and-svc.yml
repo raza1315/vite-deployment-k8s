@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: vite-app
-          image: razaaa2gud/vite-app-test:v1
+          image: razaaa2gud/vite-app-test:v2
           ports:
             - containerPort: 80
 ---

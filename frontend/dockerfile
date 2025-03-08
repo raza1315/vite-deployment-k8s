@@ -1,18 +1,16 @@
-# Use official nginx image
+# Use Node.js image to build Vite app
+FROM node:alpine AS builder
+WORKDIR /app
+COPY package*.json ./
+RUN npm install
+COPY . .
+RUN npm run build
+
+# Use nginx to serve the built app
 FROM nginx:alpine
-
-# Set working directory
 WORKDIR /usr/share/nginx/html
-
-# Remove default nginx static assets
 RUN rm -rf ./*
-
-# Copy Vite build output to nginx
-COPY dist .
-
-# Expose port 80
+COPY --from=builder /app/dist .
 EXPOSE 80
-
-# Start nginx
 CMD ["nginx", "-g", "daemon off;"]
 
